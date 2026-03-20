@@ -40,6 +40,21 @@ main{max-width:720px;margin:0 auto;padding:48px 24px 80px 24px}
 .pip-copy:hover{color:#fff}
 .pip-copy.copied{color:#5ae07c}
 .pip-copy svg{width:12px;height:12px}
+.input-guide{background:#f9f9f9;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.9}
+.input-guide strong{font-weight:600}
+.input-guide .prompt{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;color:#1a1a1a}
+.input-guide .prompt span{color:#6b6b6b}
+.input-guide .note{display:block;margin-top:8px;color:#6b6b6b;font-size:12px;font-style:italic}
+.accordion{border:1px solid #e2e2e5;border-radius:6px;margin-bottom:24px;overflow:hidden}
+.accordion-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#1a1a1a;background:#f9f9f9;border:none;cursor:pointer;transition:background 0.12s}
+.accordion-btn:hover{background:#f0f0f2}
+.accordion-btn .arrow{font-size:11px;color:#999;transition:transform 0.2s}
+.accordion-btn.open .arrow{transform:rotate(180deg)}
+.accordion-body{display:none;padding:16px;font-size:13px;line-height:1.85;color:#333;border-top:1px solid #e2e2e5}
+.accordion-body.open{display:block}
+.accordion-body p{margin-bottom:12px}
+.accordion-body p:last-child{margin-bottom:0}
+.accordion-body b{color:#1a1a1a}
 .code-content pre{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:#2a2a2a;white-space:pre;margin:0}
 @media(max-width:600px){main{padding:32px 16px 60px 16px}.code-content pre{font-size:12px}}
 </style>
@@ -70,6 +85,17 @@ main{max-width:720px;margin:0 auto;padding:48px 24px 80px 24px}
 <strong>Dataset:</strong> No dataset required — values are hardcoded in the code
 <div class="pip-box"><code>pip install tensorflow numpy</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
 </div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> This practical is just basic math using TensorFlow. You are multiplying two matrices together and finding eigenvalues/eigenvectors. Think of it as using TensorFlow as a fancy calculator.</p>
+<p><b>What is TensorFlow?</b> TensorFlow is a library made by Google. It is mainly used for machine learning and deep learning, but here we are just using it to do matrix math. You need to install it before running the code.</p>
+<p><b>What is a tensor?</b> A tensor is just a fancy name for an array of numbers. A 2D tensor is basically a matrix (rows and columns of numbers). When we write <code>tf.constant([[1,2],[3,4]])</code>, we are creating a 2x2 matrix.</p>
+<p><b>What is matrix multiplication?</b> It is a way of multiplying two matrices together using a specific rule — you multiply rows of the first matrix with columns of the second matrix and add them up. The function <code>tf.matmul()</code> does this for us automatically.</p>
+<p><b>What are eigenvalues and eigenvectors?</b> These are special numbers and directions associated with a square matrix. They are used a lot in physics, engineering, and data science (like PCA for dimensionality reduction). The function <code>tf.linalg.eig()</code> calculates both for us. You just give it a square matrix and it returns the results.</p>
+<p><b>What does .numpy() do?</b> TensorFlow stores numbers in its own format (tensors). The <code>.numpy()</code> converts them into regular Python numbers so we can print them nicely.</p>
+</div>
+</div>
 <div class="section-label">1a.) Write a python program that creates a tensorflow operation to perform matrix multiplication between two tensors</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import tensorflow as tf
 
@@ -85,6 +111,19 @@ result = tf.matmul(tensor_a, tensor_b)
 print("\nMatrix Multiplication Result:")
 print(result.numpy())</pre></div></div>
 <div class="section-label">1b.) Tensorflow Matrix multiplication with user input</div>
+<div class="input-guide">
+<strong>Sample Input — type these values one by one when prompted:</strong>
+<span class="prompt"><span>Enter number of rows for Matrix A:</span> 2</span>
+<span class="prompt"><span>Enter number of columns for Matrix A:</span> 3</span>
+<span class="prompt"><span>Enter number of rows for Matrix B:</span> 3</span>
+<span class="prompt"><span>Enter number of columns for Matrix B:</span> 2</span>
+<span class="prompt"><span>Enter row 1 (Matrix A):</span> 3 5 7</span>
+<span class="prompt"><span>Enter row 2 (Matrix A):</span> 3 1 2</span>
+<span class="prompt"><span>Enter row 1 (Matrix B):</span> 9 7</span>
+<span class="prompt"><span>Enter row 2 (Matrix B):</span> 4 5</span>
+<span class="prompt"><span>Enter row 3 (Matrix B):</span> 5 1</span>
+<span class="note">Rule: Columns of Matrix A must equal Rows of Matrix B (here 3 = 3, so it works). Numbers are separated by spaces, not commas.</span>
+</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import tensorflow as tf
 
 def get_matrix_input(rows, cols, name):
@@ -122,6 +161,14 @@ else:
     print("\nMatrix Multiplication Result:")
     print(result.numpy())</pre></div></div>
 <div class="section-label">1c.) Eigen Values and Eigen Vectors using Tensorflow</div>
+<div class="input-guide">
+<strong>Sample Input — type these values one by one when prompted:</strong>
+<span class="prompt"><span>Enter the dimension of the square matrix (n x n):</span> 3</span>
+<span class="prompt"><span>Enter row 1:</span> 2 3 5</span>
+<span class="prompt"><span>Enter row 2:</span> 7 8 6</span>
+<span class="prompt"><span>Enter row 3:</span> 3 2 1</span>
+<span class="note">Must be a square matrix — rows and columns are the same. If you enter 3, each row must have exactly 3 numbers separated by spaces.</span>
+</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import tensorflow as tf
 
 def get_square_matrix_input(size):
@@ -160,6 +207,23 @@ print(eigen_vectors.numpy())</pre></div></div>
 <strong>Libraries:</strong> <code>tensorflow</code>, <code>numpy</code>, <code>matplotlib</code>, <code>pandas</code>, <code>seaborn</code>, <code>scikit-learn</code><br>
 <strong>Dataset:</strong> Breast Cancer Wisconsin — built-in with scikit-learn, no download needed
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib pandas seaborn scikit-learn</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib pandas seaborn scikit-learn')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+</div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> We are building a small brain (neural network) that looks at medical data about tumors and predicts whether a tumor is cancerous (malignant) or not cancerous (benign). This is called binary classification because there are only 2 possible answers.</p>
+<p><b>What is the Breast Cancer dataset?</b> It is a famous medical dataset with 569 patient records. Each record has 30 measurements about a tumor (like size, texture, smoothness). The answer for each record is either 0 (malignant/cancerous) or 1 (benign/not cancerous). It comes built-in with scikit-learn.</p>
+<p><b>What does each library do?</b></p>
+<p><b>numpy</b> — handles arrays and number operations. <b>matplotlib</b> — draws graphs (accuracy curve, loss curve). <b>pandas</b> — works with data tables. <b>seaborn</b> — makes the confusion matrix heatmap look pretty. <b>scikit-learn</b> — provides the dataset, splits data into train/test, scales numbers, and gives us evaluation tools. <b>tensorflow/keras</b> — builds and trains the neural network.</p>
+<p><b>What does the code do step by step?</b></p>
+<p>1. Loads the breast cancer data and splits it — 80% for training, 20% for testing.</p>
+<p>2. Scales the features using StandardScaler — this makes all numbers fall in a similar range so the network learns better.</p>
+<p>3. Builds a neural network with 3 layers — first layer has 16 neurons, second has 8, last has 1 (which gives the final yes/no answer). The last layer uses sigmoid which squeezes the output between 0 and 1.</p>
+<p>4. Trains the model for 30 rounds (epochs). Each round, the model looks at the training data and improves its predictions.</p>
+<p>5. Shows accuracy and loss graphs — accuracy should go up, loss should go down.</p>
+<p>6. Tests the model on data it has never seen before and prints accuracy (should be around 97-98%).</p>
+<p>7. Shows a confusion matrix — a 2x2 grid showing how many it got right and wrong for each class.</p>
+</div>
 </div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import matplotlib.pyplot as plt
@@ -250,6 +314,20 @@ print(classification_report(labels_test, predicted_labels))</pre></div></div>
 <strong>Dataset:</strong> No dataset required — XOR values are hardcoded in the code
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
 </div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> XOR is a logical operation. It gives 1 when the two inputs are different, and 0 when they are the same. (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0. A single neuron cannot solve this problem because the data is not linearly separable (you cannot draw a single straight line to separate the 0s from the 1s). So we need a network with a hidden layer.</p>
+<p><b>Why is this important?</b> XOR is the classic proof that deep networks are more powerful than single neurons. It is one of the most famous problems in neural network history. If your network can solve XOR, it means it can learn non-linear patterns.</p>
+<p><b>What does the code do?</b></p>
+<p>1. Creates the XOR data — 4 input combinations and their expected outputs, hardcoded directly in the code.</p>
+<p>2. Builds a small network — first layer has 8 neurons with ReLU activation, output layer has 1 neuron with sigmoid (gives a value between 0 and 1).</p>
+<p>3. Trains for 500 epochs silently (verbose=0 means no training output shown).</p>
+<p>4. Creates a grid of thousands of points and predicts each one to draw a decision boundary — the colored regions show where the network predicts 0 (blue) and 1 (red).</p>
+<p>5. Plots the 4 XOR data points on top of this boundary to show the network learned correctly.</p>
+<p><b>Note:</b> Sometimes due to random weight initialization the network might not learn properly. If the plot looks wrong (all one color), just run the cell again.</p>
+</div>
+</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
@@ -302,6 +380,21 @@ plt.show()</pre></div></div>
 <strong>Libraries:</strong> <code>tensorflow</code>, <code>numpy</code>, <code>matplotlib</code>, <code>scikit-learn</code><br>
 <strong>Dataset:</strong> Breast Cancer Wisconsin — built-in with scikit-learn, no download needed
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib scikit-learn</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib scikit-learn')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+</div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> This practical shows what happens when a neural network memorizes the training data too well (overfitting) and how to prevent it using regularization. We build two models on the same breast cancer data — one without any protection and one with L2 regularization and Dropout — then compare them.</p>
+<p><b>What is overfitting?</b> Imagine a student who memorizes the textbook word by word but cannot answer new questions. That is overfitting. The model performs amazingly on training data but poorly on new/unseen data.</p>
+<p><b>What is L2 regularization?</b> It adds a penalty to the model when its internal weights become too large. This forces the model to keep weights small and simple, preventing it from memorizing the data. The <code>kernel_regularizer=l2(0.01)</code> means we add a small penalty of 0.01 times the squared weights.</p>
+<p><b>What is Dropout?</b> During training, Dropout randomly turns off some neurons (sets them to zero). <code>Dropout(0.5)</code> means 50% of neurons are randomly switched off in each training step. This forces the remaining neurons to not rely too heavily on any single neuron, making the model more robust.</p>
+<p><b>What does the code do?</b></p>
+<p>1. Loads breast cancer data and splits into train/test (same as Practical 2).</p>
+<p>2. Builds Model 1 — a normal network with no protection (64 neurons, then 32, then 1).</p>
+<p>3. Builds Model 2 — same structure but with L2 regularization on the weight layers and Dropout(0.5) after each hidden layer.</p>
+<p>4. Trains both for 50 epochs and plots their validation accuracy side by side.</p>
+<p>5. Prints test accuracy for both models so you can compare which generalizes better.</p>
+</div>
 </div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import matplotlib.pyplot as plt
@@ -374,6 +467,22 @@ print("Test Accuracy With L2 + Dropout:", accuracy_with_reg)</pre></div></div>
 <strong>Libraries:</strong> <code>tensorflow</code>, <code>numpy</code>, <code>matplotlib</code>, <code>scikit-learn</code><br>
 <strong>Dataset:</strong> California Housing — auto-downloads from internet on first run, cached after that
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib scikit-learn</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib scikit-learn')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+</div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> Instead of classifying into categories (like Practical 2), here we are predicting a number — the price of a house. This is called regression. We build a feed forward network with two hidden layers to predict California house prices.</p>
+<p><b>What is the California Housing dataset?</b> It contains 20,640 records of houses in California from the 1990 census. Each record has 8 features like median income of the area, house age, number of rooms, location (latitude/longitude), etc. The target value is the median house price in that area (in $100,000s).</p>
+<p><b>What is linear regression with a neural network?</b> Traditional linear regression draws a straight line through data. A neural network with hidden layers can learn curved/complex patterns. The last layer has just 1 neuron with no activation function (linear output) — it directly outputs the predicted price.</p>
+<p><b>What does each library do here?</b></p>
+<p><b>fetch_california_housing</b> — downloads the housing data (first time only, then cached). <b>StandardScaler</b> — scales all features to have mean=0 and standard deviation=1 (important because features like income and latitude have very different ranges). <b>r2_score</b> — measures how good predictions are (1.0 = perfect, 0.0 = useless).</p>
+<p><b>What does the code do?</b></p>
+<p>1. Downloads and loads the housing data, splits it 80/20.</p>
+<p>2. Scales features so the network can learn properly.</p>
+<p>3. Builds a network: 64 neurons → 32 neurons → 1 output neuron.</p>
+<p>4. Trains for 50 epochs using mean squared error as the loss (measures how far off predictions are from real prices).</p>
+<p>5. Evaluates on test data, shows MSE, MAE, R2 score, and a training/validation loss graph.</p>
+</div>
 </div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import matplotlib.pyplot as plt
@@ -460,6 +569,22 @@ plt.show()</pre></div></div>
 <strong>Dataset:</strong> Iris — built-in with scikit-learn, no download needed
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib seaborn scikit-learn</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib seaborn scikit-learn')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
 </div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> This is multiclass classification — instead of just 2 categories (like malignant/benign), we are classifying flowers into 3 species: Setosa, Versicolor, and Virginica. We also use KFold Cross-Validation to make sure our results are reliable.</p>
+<p><b>What is the Iris dataset?</b> One of the most famous datasets in machine learning. It has 150 flower records with 4 features each: sepal length, sepal width, petal length, and petal width. Each flower belongs to one of 3 species. It comes built-in with scikit-learn.</p>
+<p><b>What is KFold Cross-Validation?</b> Instead of splitting data into train/test once, KFold splits the data into K equal parts (here K=5). It trains 5 times — each time using a different part as test data and the remaining 4 parts for training. This gives 5 accuracy scores instead of 1, making the result much more reliable. If all 5 scores are high, the model is genuinely good (not just lucky with one split).</p>
+<p><b>What is one-hot encoding?</b> The 3 classes (0, 1, 2) are converted to vectors: 0→[1,0,0], 1→[0,1,0], 2→[0,0,1]. This is needed because the last layer uses softmax which outputs 3 probabilities.</p>
+<p><b>What is softmax?</b> The last layer activation. It takes 3 numbers and converts them into 3 probabilities that add up to 1. For example: [0.9, 0.05, 0.05] means 90% chance of class 0. The class with the highest probability is the prediction.</p>
+<p><b>What does the code do?</b></p>
+<p>1. Loads Iris data, one-hot encodes labels, scales features.</p>
+<p>2. Sets up 5-fold cross validation.</p>
+<p>3. For each fold: builds a new model (64→32→3 neurons), trains 50 epochs, predicts on the test fold, calculates accuracy.</p>
+<p>4. Prints accuracy for each fold and the average accuracy across all 5 folds.</p>
+<p>5. Shows a confusion matrix from the last fold — a 3x3 grid showing predictions vs actual classes.</p>
+</div>
+</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -545,6 +670,23 @@ plt.show()</pre></div></div>
 <strong>Dataset:</strong> MNIST — auto-downloads from internet on first run, cached after that
 <div class="pip-box"><code>pip install tensorflow numpy matplotlib seaborn scikit-learn</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy matplotlib seaborn scikit-learn')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
 </div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> We build a CNN (Convolutional Neural Network) that looks at images of handwritten digits (0-9) and predicts which digit it is. This is image classification — the network learns to "see" patterns in pictures.</p>
+<p><b>What is MNIST?</b> The most famous image dataset in deep learning. It contains 70,000 grayscale images of handwritten digits — 60,000 for training and 10,000 for testing. Each image is 28x28 pixels. It auto-downloads the first time you run the code.</p>
+<p><b>What is a CNN and why not use a regular network?</b> A regular neural network treats each pixel as an independent input — it does not understand that nearby pixels form shapes. A CNN uses small filters (like 3x3 grids) that slide across the image and detect patterns like edges, curves, and loops. This is much better for images because it preserves spatial relationships.</p>
+<p><b>What is Conv2D?</b> A convolutional layer. <code>Conv2D(32, (3,3))</code> means 32 different 3x3 filters scan across the image. Each filter learns to detect a different pattern (one might detect horizontal edges, another might detect curves).</p>
+<p><b>What is MaxPooling2D?</b> After convolution, the image still has many pixels. MaxPooling(2,2) shrinks the image by half — it takes each 2x2 block and keeps only the maximum value. This reduces computation and makes the network focus on the most important features.</p>
+<p><b>What does Flatten do?</b> After convolution and pooling, we have a 2D feature map. Flatten converts it into a 1D list of numbers so it can be fed into regular Dense layers for the final classification.</p>
+<p><b>Why divide by 255?</b> Pixel values range from 0 to 255. Dividing by 255 scales them to 0-1, which helps the network train faster and more stably.</p>
+<p><b>What does the code do?</b></p>
+<p>1. Loads MNIST data, normalizes pixels to 0-1 range, reshapes images to 28x28x1 (the 1 means grayscale/single channel).</p>
+<p>2. Builds a CNN: Conv2D(32 filters) → MaxPool → Conv2D(64 filters) → MaxPool → Flatten → Dense(64) → Dense(10 with softmax for 10 digit classes).</p>
+<p>3. Trains for just 5 epochs (enough for 99% accuracy on this dataset).</p>
+<p>4. Evaluates on 10,000 test images and shows a 10x10 confusion matrix.</p>
+</div>
+</div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -609,6 +751,25 @@ plt.show()</pre></div></div>
 <strong>Libraries:</strong> <code>tensorflow</code>, <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>scikit-learn</code>, <code>yfinance</code><br>
 <strong>Dataset:</strong> AAPL stock data from Yahoo Finance — requires internet every run
 <div class="pip-box"><code>pip install tensorflow numpy pandas matplotlib scikit-learn yfinance</code><button class="pip-copy" onclick="copyPip(this,'pip install tensorflow numpy pandas matplotlib scikit-learn yfinance')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+</div>
+<div class="accordion">
+<button class="accordion-btn" onclick="toggleAccordion(this)">Detailed Explanation <span class="arrow">▼</span></button>
+<div class="accordion-body">
+<p><b>What this practical is about:</b> We build an LSTM (Long Short-Term Memory) network — a type of RNN (Recurrent Neural Network) — that looks at past stock prices and predicts future prices. Specifically, it looks at the last 30 days of Apple (AAPL) stock and predicts the next day's closing price.</p>
+<p><b>Why use an RNN/LSTM instead of a regular network?</b> Stock prices are sequential — today's price depends on yesterday's, which depends on the day before. A regular network treats each input independently and has no concept of order or time. An RNN processes data step by step and remembers previous steps. LSTM is an improved version of RNN that can remember patterns over longer sequences without forgetting.</p>
+<p><b>What is yfinance?</b> A Python library that downloads real stock market data from Yahoo Finance. It needs internet every time because it fetches live/historical data. You must install it separately with <code>pip install yfinance</code>.</p>
+<p><b>What is MinMaxScaler?</b> It scales all stock prices to a range between 0 and 1. For example if prices range from $120 to $190, the scaler converts $120→0, $190→1, and everything else in between. Neural networks work much better with small numbers.</p>
+<p><b>What are sequences/windows?</b> We create sliding windows of 30 days. So: days 1-30 → predict day 31, days 2-31 → predict day 32, and so on. The network learns the pattern of how prices move over 30-day windows.</p>
+<p><b>What does inverse_transform do?</b> After prediction, the values are still in 0-1 range. <code>inverse_transform</code> converts them back to actual dollar prices so the graph shows real numbers.</p>
+<p><b>What does the code do?</b></p>
+<p>1. Downloads 9 years of Apple stock data (2015-2024) using yfinance.</p>
+<p>2. Keeps only the closing price, scales it to 0-1.</p>
+<p>3. Creates 30-day sliding windows for training.</p>
+<p>4. Splits 80% for training, 20% for testing.</p>
+<p>5. Builds an LSTM network: LSTM(50 units, returns sequences) → LSTM(50 units) → Dense(1). Two LSTM layers stacked means the second layer learns higher-level patterns from the first layer's output.</p>
+<p>6. Trains for 20 epochs (this is the slowest practical — can take 5-10 minutes).</p>
+<p>7. Predicts test data, converts back to real prices, and plots actual vs predicted. The lines should closely follow each other.</p>
+</div>
 </div>
 <div class="code-block"><div class="code-header"><span class="code-lang">Python</span><button class="copy-btn" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div><div class="code-content"><pre>import numpy as np
 import pandas as pd
@@ -678,6 +839,7 @@ plt.show()</pre></div></div>
 <script>
 function switchPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0})}
 document.querySelectorAll('[data-goto]').forEach(r=>{r.addEventListener('click',()=>switchPage(r.dataset.goto))});
+function toggleAccordion(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('open')}
 function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy'},2000)})}
 function copyPip(btn,cmd){navigator.clipboard.writeText(cmd).then(()=>{btn.classList.add('copied');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy'},2000)})}
 </script>
